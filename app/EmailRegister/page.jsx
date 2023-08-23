@@ -4,14 +4,37 @@ import Link from "next/link";
 import React , {useState} from "react";
 
 export default function EmailSignUp() {
-    const [userName, setUserName] = useState();
+    const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const signUpUser = (e) => {
+    const signUpUser = async(e) => {
         e.preventDefault();
         
-        console.log(userName, email, password)
+        // console.log(name, email, password)
+
+        try {
+            const res = await fetch("api/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password
+                })
+            });
+
+            if(res.ok) {
+                const form = e.target;
+                form.reset()
+            } else {
+                console.log("User Registeration Failed");
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
   return (
     <div>
@@ -27,7 +50,7 @@ export default function EmailSignUp() {
                   UserName
                   <label>
                     <input
-                    onChange={(e) =>  setUserName(e.target.value)}
+                    onChange={(e) =>  setName(e.target.value)}
                       type="email"
                       placeholder="Email"
                       className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
