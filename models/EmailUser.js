@@ -18,5 +18,5 @@ const emailUserSchema = new Schema(
   { timestamps: true }
 );
 
-const EmailUser = models.EmailUser || mongoose.model("Email User", emailUserSchema);
+const EmailUser = models.EmailUser || mongoose.model("Email Account", emailUserSchema);
 export default EmailUser;
